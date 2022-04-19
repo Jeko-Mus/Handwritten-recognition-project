@@ -7,10 +7,13 @@ Installation
 pip install opencv-python aswell as the use of matplotlib and numpy libraries
 
 example input image
+
 ![image](https://user-images.githubusercontent.com/57463439/163854849-6907f3c9-0518-4caa-abe6-9d6259948477.png)
 
 
+
 example output image
+
 ![image](https://user-images.githubusercontent.com/57463439/164012832-3c4629b1-1b98-4999-a63f-a1fb748bb4c4.png)
 
 
