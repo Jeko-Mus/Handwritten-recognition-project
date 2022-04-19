@@ -79,6 +79,8 @@ def sort_contours(cnts, method="left-to-right"):
 cnts, bboxs = sort_contours(contours)
 print(len(cnts))
 
+
+# create lists for x,y w and h
 xss = []
 yss = []
 wss = []
@@ -92,9 +94,36 @@ for i in cnts:
         hss.append(hs)
         i+=1
 
+# crop picture to get each individual number separately
+ind_numbers = []
 for x,y,w,h in zip(xss,yss,wss,hss):
-    image = crop.copy()
-    cv2.rectangle(image,(x,y),(x+w,y+h),(0,255,0),20)
-    cv2.imshow('highlights', image)
-    cv2.waitKey(0) 
-    cv2.destroyAllWindows() 
+    one = crop[y:y+h, x:x+w]
+    ind_numbers.append(one)
+
+# function to preprocess the number images
+def preproc(img):
+    #convert pics to greyscale
+    gray_img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    #resize
+    gray_img = cv2.resize(gray_img,(28,28))
+
+    #change colour using otsu
+    ret, otsu = cv2.threshold(gray_img, 0, 255, cv2.THRESH_BINARY_INV +cv2.THRESH_OTSU)
+    #return plt.imshow(otsu, cmap = 'gray')
+    return otsu
+
+#preprocess the images
+numbers = []
+for i in ind_numbers:
+    clean = preproc(i)
+    numbers.append(clean)
+
+# saving images to files
+cv2.imwrite('nums/one.png',numbers[0])
+cv2.imwrite('nums/seven.png',numbers[1])
+cv2.imwrite('nums/six.png',numbers[2])
+cv2.imwrite('nums/two.png',numbers[3])
+cv2.imwrite('nums/eight.png',numbers[4])
+cv2.imwrite('nums/nine.png',numbers[5])
+
